@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /admin
+Disallow: /login-admin
+
+Sitemap: https://royallimoco.com/sitemap.xml
