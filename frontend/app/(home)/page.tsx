@@ -1,6 +1,6 @@
 "use client";
 
-import DigitalHealthCheckForm from "@/components/common/DigitalHealthCheckForm";
+import CyberSecurityComplianceForm from "@/components/common/CyberSecurityComplianceForm";
 import FloatingWhatsAppComponent from "@/components/common/FloatingWhatsAppComponent";
 import HeaderHero from "@/components/common/HeaderHero";
 
@@ -12,7 +12,7 @@ const LandingPage = () => {
         <div className="flex justify-center"></div>
         <div className="bg-secondary pt-24 pb-24 my-14">
           <div className="my-14 container">
-            <DigitalHealthCheckForm />
+            <CyberSecurityComplianceForm />
           </div>
         </div>
       </div>

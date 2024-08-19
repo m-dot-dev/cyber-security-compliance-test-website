@@ -9,6 +9,49 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { checkValidations } from "@/constants/formValidation";
+import { backendURL } from "@/constants/bankendURL";
+import { useState } from "react";
+import Question from "./Question";
+import { iQuestion } from "@/lib/interfaces/question";
+
+const getQuestions = (setQuestions: Function) => {
+  fetch(`${backendURL}/questions`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      setQuestions(data);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+      setQuestions([
+        {
+          question: "Error",
+          heading: "Error",
+          options: ["a", "c", "d"],
+        },
+        {
+          question: "Error",
+          heading: "Error",
+          options: ["a", "c", "d"],
+        },
+        {
+          question: "Error",
+          heading: "Error",
+          options: ["a", "c", "d"],
+        },
+        {
+          question: "Error",
+          heading: "Error",
+          options: ["a", "c", "d"],
+        },
+      ]);
+    });
+};
 const formSchema = z
   .object({
     //company info
@@ -37,8 +80,10 @@ const formSchema = z
     return true;
   });
 
-const DigitalHealthCheckForm = () => {
+const CyberSecurityComplianceForm = () => {
+  const [questions, setQuestions] = useState([]);
   const onSubmit = () => {};
+  getQuestions(setQuestions);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -154,29 +199,17 @@ const DigitalHealthCheckForm = () => {
             />
           </div>
           <Separator className="mb-8 mt-10" />
-          <FormInput
-            form={form}
-            label="Additional Notes"
-            name="notes"
-            className="w-full space-y-0.5"
-            component={
-              <Textarea
-                placeholder="Write Here"
-                className="min-h-28 bg-transparent placeholder:text-white"
+          {questions.map(
+            ({ question, heading, options }: iQuestion, index: number) => (
+              <Question
+                key={index}
+                question={question}
+                heading={heading}
+                options={options}
               />
-            }
-          />
+            )
+          )}
           <div className="flex justify-end gap-4 mt-8">
-            {/* <Button
-              type="button"
-              variant={"outline"}
-              className="text-secondary w-24 bg-none bg-transparent border-secondary"
-              onClick={() => {
-                setActiveStep(1);
-              }}
-            >
-              Back
-            </Button> */}
             <Button type="submit" variant={"default"} className="w-24">
               Next
             </Button>
@@ -187,4 +220,4 @@ const DigitalHealthCheckForm = () => {
   );
 };
 
-export default DigitalHealthCheckForm;
+export default CyberSecurityComplianceForm;
