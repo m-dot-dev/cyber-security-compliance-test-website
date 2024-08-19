@@ -5,10 +5,6 @@ import {
   IconBrandInstagram,
   IconBrandTiktok,
 } from "@tabler/icons-react";
-import car1 from "@/assets/car1.png";
-import car2 from "@/assets/car2.png";
-import car3 from "@/assets/car3.png";
-import car4 from "@/assets/car4.png";
 import logo from "@/assets/logofooter.png";
 import { routes } from "@/constants/routes";
 
@@ -120,28 +116,6 @@ const AppFooter = () => {
             </div>
           </div>
         </div>
-      </div>
-      <div className="xl:flex justify-center -z-10 opacity-10">
-        <img
-          src={car3.src}
-          alt="hero"
-          className="object-contain object-right absolute top-12 right-48 "
-        />
-        <img
-          src={car1.src}
-          alt="hero"
-          className="object-contain object-right absolute top-14 right-40 "
-        />
-        <img
-          src={car2.src}
-          alt="hero"
-          className="object-contain object-right absolute top-24 right-6 "
-        />
-        <img
-          src={car4.src}
-          alt="hero"
-          className="object-contain object-right absolute top-36 right-0 "
-        />
       </div>
     </div>
   );
