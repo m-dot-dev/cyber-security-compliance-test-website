@@ -24,7 +24,7 @@ app.use(bodyParser.urlencoded({ extended: true })); // Parse URL-encoded bodies
 app.use("/public", express.static("public"));
 
 // Mount API routes
-app.use("/question", questionRouter);
+app.use("/questions", questionRouter);
 
 // Create HTTP server
 http.createServer(app).listen(port, () => {
