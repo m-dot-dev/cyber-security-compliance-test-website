@@ -1,19 +1,12 @@
 "use client";
-import { Button } from "@/components/ui/button";
-import { Form } from "@/components/ui/form";
+import Response from "@/components/common/Response";
 import { backendURL } from "@/constants/bankendURL";
-import { iQuestion } from "@/lib/interfaces/question";
-import { zodResolver } from "@hookform/resolvers/zod";
-import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { useSearchParams } from "next/navigation";
-import { toast } from "sonner";
+import { useEffect, useState } from "react";
+import { z } from "zod";
 
-const getResponse = (setResponse: Function) => {
-  const searchParams = useSearchParams();
-  const user_email = searchParams.get("user_email");
-  if (!user_email) return;
+const getResponse = (setResponse: Function, user_email: string) => {
+  // if (!user_email) return;
   fetch(`${backendURL}/questions/result/${user_email}`, {
     method: "GET",
     headers: {
@@ -24,7 +17,6 @@ const getResponse = (setResponse: Function) => {
     .then(({ data }) => {
       setResponse(data);
       // make all these fields required
-      form.regi;
     })
     .catch((error) => {
       console.error("Error:", error);
@@ -41,62 +33,41 @@ const formSchema = z.object({
   // annual_sales_turnover: z.string().optional(),
 });
 
-const CyberSecurityComplianceForm = () => {
-  const [response, setResponse] = useState([]);
-  const {};
-  const onSubmit = () => {
-    if (Object.keys(answers).length === questions.length) {
-      fetch(`${backendURL}/questions/result`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(answers),
-      });
-    } else {
-      toast.error("Please answer all questions to continue", {
-        duration: 3000,
-        description: "Please answer all questions to continue",
-      });
-    }
-  };
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {},
-  });
+const CyberSecurityComplianceResponse = () => {
+  const searchParams = useSearchParams();
+  const user_email_params = searchParams.get("user_email");
+  const [response, setResponse] = useState({});
+  const {
+    user_email,
+    total_score,
+    total_questions,
+    user_score,
+    result = [],
+  } = response || {};
+  response;
 
   useEffect(() => {
-    getResponse(setResponse, form);
+    getResponse(setResponse, user_email_params);
   }, []);
 
+  if (response === null) return <h2>Not Found!</h2>;
   return (
     <div className="container p-8  max-md:p-4 flex flex-col bg-white mt-6 rounded-xl">
-      <Form {...form}>
-        <form
-          //@ts-ignore
-          onSubmit={form.handleSubmit((data: any) => onSubmit(data))}
-          className="w-full lg-container"
-        >
-          {questions.map(
-            ({ _id, question, heading, answers }: iQuestion, index: number) => (
-              <Question
-                key={index}
-                setAnswers={setAnswers}
-                _id={_id as string}
-                index={index}
-                question={question}
-                heading={heading}
-                answers={answers}
-              />
-            )
-          )}
-          <div className="flex justify-end gap-4 mt-8">
-            <Button type="submit" variant={"default"} className="w-24">
-              Next
-            </Button>
-          </div>
-        </form>
-      </Form>
+      <div className="w-full lg-container">
+        {result.map(
+          (
+            {
+              heading,
+              response,
+            }: { _id: string; heading: string; response: string },
+            index: string
+          ) => (
+            <Response heading={heading} response={response} index={index} />
+          )
+        )}
+      </div>
     </div>
   );
 };
 
-export default CyberSecurityComplianceForm;
+export default CyberSecurityComplianceResponse;

@@ -1,10 +1,10 @@
 const Response = ({
   heading,
-  answer,
+  response,
   index,
 }: {
   heading: string;
-  answer: string;
+  response: string;
   index: string;
 }) => {
   return (
@@ -12,7 +12,7 @@ const Response = ({
       <h3 className="font-semibold text-primary">
         {index + 1}: {heading}:
       </h3>
-      <p className="text-muted-foreground">{answer}</p>
+      <p className="text-muted-foreground">{response}</p>
     </div>
   );
 };
