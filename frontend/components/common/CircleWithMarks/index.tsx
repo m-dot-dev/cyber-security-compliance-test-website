@@ -7,7 +7,7 @@ const CircleWithText = ({
   total_score: number;
   user_score: number;
 }) => {
-  if (!total_score || !user_score) return null;
+  if (!total_score || user_score === undefined) return null;
   return (
     <div className="flex justify-center items-center gap-5">
       <h2 className="text-xl">Your Cyber Security Compliance Score is</h2>
