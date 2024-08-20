@@ -3,6 +3,8 @@
   "version": "0.0.1",
   "main": "index.js",
   "scripts": {
+    "postinstall": "cd backend && npm i",
+    "start": "cd backend && npm i && node index.js",
     "server": "cd backend && npm i && npm run dev",
     "client": "cd frontend && npm i && npm run dev",
     "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\""

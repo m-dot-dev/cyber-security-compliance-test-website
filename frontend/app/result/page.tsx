@@ -5,7 +5,6 @@ import { backendURL } from "@/constants/bankendURL";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { z } from "zod";
 
 const getResponse = (setResponse: Function, user_email: string | null) => {
   // if (!user_email) return;
@@ -24,21 +23,12 @@ const getResponse = (setResponse: Function, user_email: string | null) => {
       console.error("Error:", error);
     });
 };
-const formSchema = z.object({
-  // //company info
-  // sector: z.string().min(2, "First Name must be at least 2 characters"),
-  // ABN: z.string().optional(),
-  // company_name: z.string().email("Invalid Email"),
-  // grant_id: z.string().optional(),
-  // years_in_operation: z.string().optional(),
-  // number_of_employees: z.string().optional(),
-  // annual_sales_turnover: z.string().optional(),
-});
 
 const CyberSecurityComplianceResponse = () => {
   const searchParams = useSearchParams();
   const user_email_params = searchParams.get("user_email");
   const [response, setResponse] = useState({});
+  //@ts-ignore
   const { user_email, total_score, user_score, result = [] } = response || {};
   response;
 
