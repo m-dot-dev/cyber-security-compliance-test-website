@@ -55,8 +55,7 @@ router.post("/result", async (req, res) => {
           totalQuestions += 1;
           totalScore += question.points;
           return {
-            question: question.question,
-            answer: selectedAnswer,
+            heading: question.heading,
             response: response.response,
           };
         }
