@@ -1,5 +1,5 @@
 export interface iQuestion {
   heading: string;
   question: string;
-  options: string[];
+  answers: string[] | { answer: string }[];
 }

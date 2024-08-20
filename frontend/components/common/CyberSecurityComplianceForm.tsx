@@ -3,16 +3,15 @@ import FormInput from "@/components/common/FormInput";
 import FormSelect from "@/components/common/FormSelect";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
-import { Separator } from "../ui/separator";
-import { Textarea } from "../ui/textarea";
+import { backendURL } from "@/constants/bankendURL";
+import { checkValidations } from "@/constants/formValidation";
+import { iQuestion } from "@/lib/interfaces/question";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { checkValidations } from "@/constants/formValidation";
-import { backendURL } from "@/constants/bankendURL";
-import { useState } from "react";
+import { Separator } from "../ui/separator";
 import Question from "./Question";
-import { iQuestion } from "@/lib/interfaces/question";
 
 const getQuestions = (setQuestions: Function) => {
   fetch(`${backendURL}/questions`, {
@@ -22,7 +21,7 @@ const getQuestions = (setQuestions: Function) => {
     },
   })
     .then((response) => response.json())
-    .then((data) => {
+    .then(({ data }) => {
       console.log(data);
       setQuestions(data);
     })
@@ -32,22 +31,22 @@ const getQuestions = (setQuestions: Function) => {
         {
           question: "Error",
           heading: "Error",
-          options: ["a", "c", "d"],
+          answers: ["a", "c", "d"],
         },
         {
           question: "Error",
           heading: "Error",
-          options: ["a", "c", "d"],
+          answers: ["a", "c", "d"],
         },
         {
           question: "Error",
           heading: "Error",
-          options: ["a", "c", "d"],
+          answers: ["a", "c", "d"],
         },
         {
           question: "Error",
           heading: "Error",
-          options: ["a", "c", "d"],
+          answers: ["a", "c", "d"],
         },
       ]);
     });
@@ -83,7 +82,9 @@ const formSchema = z
 const CyberSecurityComplianceForm = () => {
   const [questions, setQuestions] = useState([]);
   const onSubmit = () => {};
-  getQuestions(setQuestions);
+  useEffect(() => {
+    getQuestions(setQuestions);
+  }, []);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -200,12 +201,13 @@ const CyberSecurityComplianceForm = () => {
           </div>
           <Separator className="mb-8 mt-10" />
           {questions.map(
-            ({ question, heading, options }: iQuestion, index: number) => (
+            ({ question, heading, answers }: iQuestion, index: number) => (
               <Question
                 key={index}
+                index={index}
                 question={question}
                 heading={heading}
-                options={options}
+                answers={answers}
               />
             )
           )}
