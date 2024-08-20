@@ -80,7 +80,9 @@ router.get("/result/:email", async (req, res) => {
   const { email } = req.params;
   try {
     console.log(email);
-    const result = await UserComplianceResult.findOne({ user_email: email });
+    const result = await UserComplianceResult.findOne({
+      user_email: undefined,
+    });
     return res.send({ data: result });
   } catch (error) {
     return res.status(400).send(error);

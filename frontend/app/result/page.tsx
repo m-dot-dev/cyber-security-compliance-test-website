@@ -1,11 +1,13 @@
 "use client";
+import CircleWithMarks from "@/components/common/CircleWithMarks";
 import Response from "@/components/common/Response";
 import { backendURL } from "@/constants/bankendURL";
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { z } from "zod";
 
-const getResponse = (setResponse: Function, user_email: string) => {
+const getResponse = (setResponse: Function, user_email: string | null) => {
   // if (!user_email) return;
   fetch(`${backendURL}/questions/result/${user_email}`, {
     method: "GET",
@@ -53,6 +55,11 @@ const CyberSecurityComplianceResponse = () => {
   if (response === null) return <h2>Not Found!</h2>;
   return (
     <div className="container p-8  max-md:p-4 flex flex-col bg-white mt-6 rounded-xl">
+      <h2 className="text-lg capitalize font-semibold text-center mb-4">
+        Your Cyber Security Compliance Result has also been dispatched to your
+        email <Link href={`mailto:${user_email}`}>{user_email}</Link>
+      </h2>
+      <CircleWithMarks total_score={total_score} user_score={user_score} />
       <div className="w-full lg-container">
         {result.map(
           (

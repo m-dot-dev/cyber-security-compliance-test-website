@@ -4,7 +4,7 @@ const { Schema } = mongoose;
 
 const userComplianceResultSchema = new Schema(
   {
-    // user_email: { type: String, required: true },
+    user_email: { type: String, required: true },
     total_score: { type: Number, default: 0 },
     total_questions: { type: Number, default: 0 },
     user_score: { type: Number, default: 0 },
