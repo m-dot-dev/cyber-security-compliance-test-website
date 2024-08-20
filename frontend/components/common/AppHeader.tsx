@@ -76,24 +76,20 @@ const AppHeader = () => {
               <div className="flex flex-col overflow-visible">
                 {links.map((link, index) => (
                   <React.Fragment key={index}>
-                    {
-                      <Link
-                        key={index}
-                        href={link.url || "/"}
-                        className={`text-md font-normal text-primary-foreground hover:text-primary transition duration-300 ease-in-out my-3`}
-                        style={{
-                          color:
-                            link.url?.split("?")[0] === pathname
-                              ? "#CA9923"
-                              : "",
-                        }}
-                        onClick={() => {
-                          setOpenDrawer(false);
-                        }}
-                      >
-                        {link.name}
-                      </Link>
-                    }
+                    <Link
+                      key={index}
+                      href={link.url || "/"}
+                      className={`text-md font-normal text-primary-foreground hover:text-primary transition duration-300 ease-in-out my-3`}
+                      style={{
+                        color:
+                          link.url?.split("?")[0] === pathname ? "#CA9923" : "",
+                      }}
+                      onClick={() => {
+                        setOpenDrawer(false);
+                      }}
+                    >
+                      {link.name}
+                    </Link>
                   </React.Fragment>
                 ))}
               </div>

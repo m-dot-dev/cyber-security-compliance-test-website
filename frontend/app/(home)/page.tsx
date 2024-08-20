@@ -1,8 +1,8 @@
 "use client";
 
 import CyberSecurityComplianceForm from "@/components/common/CyberSecurityComplianceForm";
-import FloatingWhatsAppComponent from "@/components/common/FloatingWhatsAppComponent";
 import HeaderHero from "@/components/common/HeaderHero";
+import React from "react";
 
 const LandingPage = () => {
   return (
@@ -17,7 +17,7 @@ const LandingPage = () => {
         </div>
       </div>
 
-      <FloatingWhatsAppComponent />
+      {/* <FloatingWhatsAppComponent /> */}
     </div>
   );
 };

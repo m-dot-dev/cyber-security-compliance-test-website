@@ -34,7 +34,10 @@ const AppFooter = () => {
                 router.push(routes.home);
               }}
             />
-            <div className="text-md font-normal leading-9">{"tagline"}</div>
+            <div className="text-md font-normal leading-9">
+              Secure Today,
+              <br /> Compliant Tomorrow.
+            </div>
           </div>
           <div className="w-full lg:w-1/4">
             <div className="text-xl font-bold mb-8">Quick Links</div>

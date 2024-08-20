@@ -31,9 +31,6 @@ export default function RootLayout({
             <HeaderStrip />
             <AppHeader />
           </header>
-          <div>
-            <div>Center Image</div>
-          </div>
           <main className="bg-white">
             <div id="root">{children}</div>
           </main>
