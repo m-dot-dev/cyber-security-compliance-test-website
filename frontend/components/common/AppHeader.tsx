@@ -16,7 +16,6 @@ const AppHeader = () => {
   }, []);
 
   const [openDrawer, setOpenDrawer] = useState(false);
-  const [showFleetDropdown, setShowFleetDropdown] = useState(false);
   const router = useRouter();
 
   // Define links based on user authentication

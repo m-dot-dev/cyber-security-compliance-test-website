@@ -41,7 +41,10 @@ const CyberSecurityComplianceForm = () => {
   const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState({});
   const onSubmit = () => {
-    if (Object.keys(answers).length === questions.length) {
+    const answersWithoutEmail = { ...answers };
+    // @ts-ignore
+    delete answersWithoutEmail.email;
+    if (Object.keys(answersWithoutEmail).length === questions.length) {
       fetch(`${backendURL}/questions/result`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
