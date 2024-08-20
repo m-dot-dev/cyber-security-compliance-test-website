@@ -1,5 +1,5 @@
 export const backendURL =
-  process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8082/api";
+  process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8082";
 export const APIHeaders = () => {
   const token = localStorage.getItem("authToken");
   return {
