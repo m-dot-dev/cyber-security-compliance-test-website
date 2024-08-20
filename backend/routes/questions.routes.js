@@ -79,9 +79,8 @@ router.post("/result", async (req, res) => {
 router.get("/result/:email", async (req, res) => {
   const { email } = req.params;
   try {
-    console.log(email);
     const result = await UserComplianceResult.findOne({
-      user_email: undefined,
+      user_email: email,
     });
     return res.send({ data: result });
   } catch (error) {

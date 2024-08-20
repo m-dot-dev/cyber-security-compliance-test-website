@@ -1,6 +1,12 @@
 import React from "react";
 
-const CircleWithText: React.FC = ({ total_score, user_score }) => {
+const CircleWithText = ({
+  total_score,
+  user_score,
+}: {
+  total_score: number;
+  user_score: number;
+}) => {
   if (!total_score || !user_score) return null;
   return (
     <div className="flex justify-center items-center gap-5">

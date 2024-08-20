@@ -39,13 +39,7 @@ const CyberSecurityComplianceResponse = () => {
   const searchParams = useSearchParams();
   const user_email_params = searchParams.get("user_email");
   const [response, setResponse] = useState({});
-  const {
-    user_email,
-    total_score,
-    total_questions,
-    user_score,
-    result = [],
-  } = response || {};
+  const { user_email, total_score, user_score, result = [] } = response || {};
   response;
 
   useEffect(() => {
