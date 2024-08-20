@@ -7,7 +7,9 @@ const Question = ({
   question,
   answers,
   index,
-}: iQuestion & { index: number }) => {
+  setAnswers,
+  _id,
+}: iQuestion & { index: number; setAnswers: Function; _id: string }) => {
   return (
     <div className="pt-6">
       <h3 className="font-semibold text-primary">
@@ -15,12 +17,26 @@ const Question = ({
       </h3>
       <p className="pb-2">{question}</p>
       <ul>
-        <RadioGroup>
-          {answers.map(({ answer }) => (
-            <div className="flex items-center gap-x-2">
-              <RadioGroupItem id={answer} value={answer} />
-            </div>
-          ))}
+        <RadioGroup
+          onValueChange={(answer) => {
+            setAnswers((prev: any) => {
+              return {
+                ...prev,
+                [_id]: answer,
+              };
+            });
+          }}
+        >
+          {answers.map(({ answer }, index) => {
+            const id = question + index;
+            return (
+              <div className="flex items-center gap-x-2" key={id}>
+                <RadioGroupItem id={id} value={answer}>
+                  {answer}
+                </RadioGroupItem>
+              </div>
+            );
+          })}
         </RadioGroup>
       </ul>
     </div>

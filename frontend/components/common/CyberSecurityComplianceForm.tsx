@@ -1,19 +1,16 @@
 "use client";
-import FormInput from "@/components/common/FormInput";
-import FormSelect from "@/components/common/FormSelect";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { backendURL } from "@/constants/bankendURL";
-import { checkValidations } from "@/constants/formValidation";
 import { iQuestion } from "@/lib/interfaces/question";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Separator } from "../ui/separator";
 import Question from "./Question";
+import { toast } from "sonner";
 
-const getQuestions = (setQuestions: Function) => {
+const getQuestions = (setQuestions: Function, form: any) => {
   fetch(`${backendURL}/questions`, {
     method: "GET",
     headers: {
@@ -24,89 +21,46 @@ const getQuestions = (setQuestions: Function) => {
     .then(({ data }) => {
       console.log(data);
       setQuestions(data);
+      form.reset();
+      // make all these fields required
+      form.regi;
     })
     .catch((error) => {
       console.error("Error:", error);
-      setQuestions([
-        {
-          question: "Error",
-          heading: "Error",
-          answers: ["a", "c", "d"],
-        },
-        {
-          question: "Error",
-          heading: "Error",
-          answers: ["a", "c", "d"],
-        },
-        {
-          question: "Error",
-          heading: "Error",
-          answers: ["a", "c", "d"],
-        },
-        {
-          question: "Error",
-          heading: "Error",
-          answers: ["a", "c", "d"],
-        },
-      ]);
     });
 };
-const formSchema = z
-  .object({
-    //company info
-    sector: z.string().min(2, "First Name must be at least 2 characters"),
-    ABN: z.string().optional(),
-    company_name: z.string().email("Invalid Email"),
-    grant_id: z.string().optional(),
-    years_in_operation: z.string().optional(),
-    number_of_employees: z.string().optional(),
-    annual_sales_turnover: z.string().optional(),
-
-    // cyber security info
-    digital_experts_in_your_sector: z.string().optional(),
-    plan_for_digital_security: z.string().optional(),
-    phishing_attack_score: z.string().optional(),
-    ransomware_attack_score: z.string().optional(),
-    zero_day_attack_score: z.string().optional(),
-    xxs_attack_score: z.string().optional(),
-    ddos_attack_score: z.string().optional(),
-    data_breach_attack_score: z.string().optional(),
-    dns_spoofing_attack_score: z.string().optional(),
-    birthday_attack_score: z.string().optional(),
-  })
-  .refine((data) => {
-    checkValidations(data);
-    return true;
-  });
+const formSchema = z.object({
+  // //company info
+  // sector: z.string().min(2, "First Name must be at least 2 characters"),
+  // ABN: z.string().optional(),
+  // company_name: z.string().email("Invalid Email"),
+  // grant_id: z.string().optional(),
+  // years_in_operation: z.string().optional(),
+  // number_of_employees: z.string().optional(),
+  // annual_sales_turnover: z.string().optional(),
+});
 
 const CyberSecurityComplianceForm = () => {
   const [questions, setQuestions] = useState([]);
-  const onSubmit = () => {};
-  useEffect(() => {
-    getQuestions(setQuestions);
-  }, []);
+  const [answers, setAnswers] = useState({});
+  const onSubmit = () => {
+    if (Object.keys(answers).length === questions.length) {
+      console.log(answers);
+    } else {
+      toast.error("Please answer all questions to continue", {
+        duration: 3000,
+        description: "Please answer all questions to continue",
+      });
+    }
+  };
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      sector: "",
-      ABN: "",
-      company_name: "",
-      grant_id: "",
-      years_in_operation: "",
-      number_of_employees: "",
-      annual_sales_turnover: "",
-      plan_for_digital_security: "",
-      digital_experts_in_your_sector: "",
-      phishing_attack_score: "",
-      ransomware_attack_score: "",
-      zero_day_attack_score: "",
-      xxs_attack_score: "",
-      ddos_attack_score: "",
-      data_breach_attack_score: "",
-      dns_spoofing_attack_score: "",
-      birthday_attack_score: "",
-    },
+    defaultValues: {},
   });
+
+  useEffect(() => {
+    getQuestions(setQuestions, form);
+  }, []);
 
   return (
     <div className="container p-8  max-md:p-4 flex flex-col bg-white mt-6 rounded-xl">
@@ -117,7 +71,7 @@ const CyberSecurityComplianceForm = () => {
           onSubmit={form.handleSubmit((data: any) => onSubmit(data))}
           className="w-full lg-container"
         >
-          <div className="w-full ">
+          {/* <div className="w-full ">
             <FormSelect
               form={form}
               name="passengers"
@@ -199,11 +153,13 @@ const CyberSecurityComplianceForm = () => {
               ]}
             />
           </div>
-          <Separator className="mb-8 mt-10" />
+          <Separator className="mb-8 mt-10" /> */}
           {questions.map(
-            ({ question, heading, answers }: iQuestion, index: number) => (
+            ({ _id, question, heading, answers }: iQuestion, index: number) => (
               <Question
                 key={index}
+                setAnswers={setAnswers}
+                _id={_id}
                 index={index}
                 question={question}
                 heading={heading}

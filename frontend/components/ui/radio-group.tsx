@@ -41,7 +41,7 @@ const RadioGroupItem = React.forwardRef<
         </RadioGroupPrimitive.Indicator>
       </RadioGroupPrimitive.Item>
       <Label htmlFor={props.id}>
-        <p className="text-sm font-normal">{props.id}</p>
+        <p className="text-sm font-normal">{props.children}</p>
       </Label>
     </>
   );
