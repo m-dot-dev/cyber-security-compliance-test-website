@@ -1,4 +1,5 @@
 "use client";
+
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { backendURL } from "@/constants/bankendURL";
@@ -55,10 +56,12 @@ const CyberSecurityComplianceForm = () => {
   }, []);
   const router = useRouter();
 
-  const onEmailSubmit = (email) => {
+  const onEmailSubmit = (email: string) => {
+    // @ts-ignore
     answers.email = email;
     console.log(answers);
     const answersWithoutEmail = { ...answers };
+    // @ts-ignore
     delete answersWithoutEmail.email;
     if (Object.keys(answersWithoutEmail).length === questions.length) {
       fetch(`${backendURL}/questions/result`, {
