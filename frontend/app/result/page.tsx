@@ -4,7 +4,7 @@ import Response from "@/components/common/Response";
 import { backendURL } from "@/constants/bankendURL";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const getResponse = (setResponse: Function, user_email: string | null) => {
   // if (!user_email) return;

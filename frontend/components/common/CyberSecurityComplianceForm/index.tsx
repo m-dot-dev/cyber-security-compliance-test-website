@@ -77,7 +77,7 @@ const CyberSecurityComplianceForm = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(answers),
       })
-        .then((res) => {
+        .then(() => {
           router.push(`/result?user_email=${email}`);
         })
         .catch((err) => console.log(err));
