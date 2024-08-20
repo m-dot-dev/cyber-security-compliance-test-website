@@ -78,6 +78,7 @@ const CyberSecurityComplianceForm = () => {
         body: JSON.stringify(answers),
       })
         .then(() => {
+          setOpenDialog(false);
           router.push(`/result?user_email=${email}`);
         })
         .catch((err) => console.log(err));

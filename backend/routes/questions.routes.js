@@ -79,10 +79,15 @@ router.post("/result", async (req, res) => {
 router.get("/result/:email", async (req, res) => {
   const { email } = req.params;
   try {
-    const result = await UserComplianceResult.findOne({
+    const result = await UserComplianceResult.find({
       user_email: email,
-    });
-    return res.send({ data: result });
+    })
+      .sort({ createdAt: -1 })
+      .limit(1);
+    if (result.length === 0) {
+      return res.send({ data: null });
+    }
+    return res.send({ data: result[0] });
   } catch (error) {
     return res.status(400).send(error);
   }
