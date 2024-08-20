@@ -1,7 +1,3 @@
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { iQuestion } from "@/lib/interfaces/question";
-import React from "react";
-
 const Response = ({
   heading,
   answer,

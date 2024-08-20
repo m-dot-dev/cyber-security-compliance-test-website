@@ -4,14 +4,17 @@ import { Form } from "@/components/ui/form";
 import { backendURL } from "@/constants/bankendURL";
 import { iQuestion } from "@/lib/interfaces/question";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import Question from "../Question";
+import { useSearchParams } from "next/navigation";
 import { toast } from "sonner";
 
-const getResponse  (setResponse: Function, form: any) => {
-  fetch(`${backendURL}/questions`, {
+const getResponse = (setResponse: Function) => {
+  const searchParams = useSearchParams();
+  const user_email = searchParams.get("user_email");
+  if (!user_email) return;
+  fetch(`${backendURL}/questions/result/${user_email}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -19,9 +22,7 @@ const getResponse  (setResponse: Function, form: any) => {
   })
     .then((response) => response.json())
     .then(({ data }) => {
-      console.log(data);
-    setResponse(data);
-      form.reset();
+      setResponse(data);
       // make all these fields required
       form.regi;
     })
@@ -42,6 +43,7 @@ const formSchema = z.object({
 
 const CyberSecurityComplianceForm = () => {
   const [response, setResponse] = useState([]);
+  const {};
   const onSubmit = () => {
     if (Object.keys(answers).length === questions.length) {
       fetch(`${backendURL}/questions/result`, {
@@ -62,7 +64,7 @@ const CyberSecurityComplianceForm = () => {
   });
 
   useEffect(() => {
-    getQuestios(setResponse, form);
+    getResponse(setResponse, form);
   }, []);
 
   return (

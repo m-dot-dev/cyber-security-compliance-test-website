@@ -10,7 +10,7 @@ import { z } from "zod";
 import Question from "../Question";
 import { toast } from "sonner";
 
-const getQuestions = (setQuestions: Function, form: any) => {
+const getQuestions = (setQuestions: Function) => {
   fetch(`${backendURL}/questions`, {
     method: "GET",
     headers: {
@@ -21,9 +21,6 @@ const getQuestions = (setQuestions: Function, form: any) => {
     .then(({ data }) => {
       console.log(data);
       setQuestions(data);
-      form.reset();
-      // make all these fields required
-      form.regi;
     })
     .catch((error) => {
       console.error("Error:", error);
@@ -63,7 +60,7 @@ const CyberSecurityComplianceForm = () => {
   });
 
   useEffect(() => {
-    getQuestions(setQuestions, form);
+    getQuestions(setQuestions);
   }, []);
 
   return (
