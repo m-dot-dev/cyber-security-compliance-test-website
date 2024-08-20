@@ -21,7 +21,6 @@ const getQuestions = (setQuestions: Function) => {
   })
     .then((response) => response.json())
     .then(({ data }) => {
-      console.log(data);
       setQuestions(data);
     })
     .catch((error) => {
@@ -44,7 +43,17 @@ const CyberSecurityComplianceForm = () => {
   const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState({});
   const onSubmit = () => {
-    setOpenDialog(true);
+    const answersWithoutEmail = { ...answers };
+    // @ts-ignore
+    delete answersWithoutEmail.email;
+    if (Object.keys(answersWithoutEmail).length === questions.length) {
+      setOpenDialog(true);
+    } else {
+      toast.error("Please answer all questions to continue", {
+        duration: 3000,
+        description: "Please answer all questions to continue",
+      });
+    }
   };
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -59,7 +68,6 @@ const CyberSecurityComplianceForm = () => {
   const onEmailSubmit = (email: string) => {
     // @ts-ignore
     answers.email = email;
-    console.log(answers);
     const answersWithoutEmail = { ...answers };
     // @ts-ignore
     delete answersWithoutEmail.email;
@@ -70,8 +78,7 @@ const CyberSecurityComplianceForm = () => {
         body: JSON.stringify(answers),
       })
         .then((res) => {
-          console.log(res);
-          router.push(`/result?user_email=${email}`, { scroll: false });
+          router.push(`/result?user_email=${email}`);
         })
         .catch((err) => console.log(err));
     } else {
